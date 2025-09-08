@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Cricket Game</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Bat Ball Stump Game</h1>
+
+  <button onclick="playGame('Bat')">Bat</button>
+  <button onclick="playGame('Ball')">Ball</button>
+  <button onclick="playGame('Stump')">Stump</button>
+
+  <script>
+    let score = {
+      win: 0,
+      lost: 0,
+      tie: 0,
+    };
+
+    let computerchoice;
+
+    function generateRajachoice() {
+      let randomNumber = Math.random() * 3;
+
+      if (randomNumber <= 1) {
+        computerchoice = 'Bat';
+      } else if (randomNumber <= 2) {
+        computerchoice = 'Ball';
+      } else {
+        computerchoice = 'Stump';
+      }
+    }
+
+    function playGame(playerChoice) {
+      generateRajachoice();
+      let resultMsg;
+
+      if (playerChoice === computerchoice) {
+        score.tie++;
+        resultMsg = "It's a Tie!";
+      } else if (
+        (playerChoice === 'Bat' && computerchoice === 'Ball') ||
+        (playerChoice === 'Ball' && computerchoice === 'Stump') ||
+        (playerChoice === 'Stump' && computerchoice === 'Bat')
+      ) {
+        score.win++;
+        resultMsg = "Raja Won!";
+      } else {
+        score.lost++;
+        resultMsg = "Computer Won!";
+      }
+
+      alert(`You chose ${playerChoice}. Computer chose ${computerchoice}. ${resultMsg}
+Wins: ${score.win}, Losses: ${score.lost}, Ties: ${score.tie}`);
+    }
+  </script>
+</body>
+</html>
