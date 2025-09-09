@@ -2,32 +2,40 @@
 <html lang="en">
 <head>
   <title>Cricket Game</title>
-  <style>
-    body {
-      text-align: center;
-      font-family: Arial, sans-serif;
-    }
-    button {
-      margin: 10px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-  </style>
+  <link rel="stylesheet" href="cricket.css">
 </head>
 <body>
   <h1>Bat Ball Stump Game</h1>
+ 
 
-  <button onclick="playGame('Bat')">Bat</button>
-  <button onclick="playGame('Ball')">Ball</button>
-  <button onclick="playGame('Stump')">Stump</button>
+  <button class="choice-button" onclick="playGame('Bat')"><img src="https://raw.githubusercontent.com/Complete-Coding/JavaScript_Complete_YouTube/refs/heads/main/Projects/2%20Cricket%20Game/images/bat.png " alt="Bat Image" class="choice-image">
+</button>
 
+  <button class="choice-button" onclick="playGame('Ball')"><img src="https://raw.githubusercontent.com/Complete-Coding/JavaScript_Complete_YouTube/refs/heads/main/Projects/2%20Cricket%20Game/images/ball.png" alt="Ball Image" class="choice-image"></button>
+
+  <button class="choice-button" onclick="playGame('Stump')"><img src="https://raw.githubusercontent.com/Complete-Coding/JavaScript_Complete_YouTube/refs/heads/main/Projects/2%20Cricket%20Game/images/stump.png" alt="stump Image" class="choice-image"></button>
+  <h3 id="Raja-choice"></h3>
+  <h3 id="computer-choice"></h3>
+  <h3 id="resultMsg"></h3>
+  <h3 id="score"></h3>
+<button onclick="resetScore()">Reset</button>
   <script>
-    let score = {
-      win: 0,
-      lost: 0,
-      tie: 0,
-    };
+    let scoreStr = localStorage.getItem('Score');
+    let score;
+
+    // ✅ Proper reset function
+    function resetScore(savedScore = null) {
+      score = savedScore ? JSON.parse(savedScore) : {
+        win: 0,
+        lost: 0,
+        tie: 0
+      };
+      localStorage.setItem('Score', JSON.stringify(score));
+      updateScoreDisplay();
+    }
+
+    // Initialize score when page loads
+    resetScore(scoreStr);
 
     let computerchoice;
 
@@ -62,8 +70,20 @@
         resultMsg = "Computer Won!";
       }
 
+      localStorage.setItem('Score', JSON.stringify(score));
+
+      document.querySelector('#Raja-choice').innerText = `You chose ${playerChoice}`;
+      document.querySelector('#computer-choice').innerText = `Computer chose ${computerchoice}`;
+      document.querySelector('#resultMsg').innerText = resultMsg;
+      updateScoreDisplay();
+
       alert(`You chose ${playerChoice}. Computer chose ${computerchoice}. ${resultMsg}
 Wins: ${score.win}, Losses: ${score.lost}, Ties: ${score.tie}`);
+    }
+
+    function updateScoreDisplay() {
+      document.querySelector('#score').innerText =
+        `Wins: ${score.win}, Losses: ${score.lost}, Ties: ${score.tie}`;
     }
   </script>
 </body>
